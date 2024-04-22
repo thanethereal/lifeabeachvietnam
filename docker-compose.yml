@@ -5,10 +5,12 @@ server:
   volumes:
     - ./server/conf.d:/etc/nginx/conf.d
     - ./app/static:/app/static
+    - /root/ssl/official/gveyes_net.crt:/root/ssl/official/gveyes_net.crt
+    - /root/ssl/official/gveyes.net.private_key:/root/ssl/official/gveyes.net.private_key
   links:
     - web:web
   ports:
-    - "80:80"
+    - "433:433"
 
 web:
   extends:
