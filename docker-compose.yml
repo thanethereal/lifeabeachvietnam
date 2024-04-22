@@ -1,4 +1,3 @@
-version: '3'
 server:
   image: nginx
   restart: always
