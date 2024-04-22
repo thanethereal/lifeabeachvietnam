@@ -1,16 +1,20 @@
 server:
   image: nginx
   restart: always
+  ports:
+    - 80:80
+    - 443:443
+  restart: always
   volumes:
-    - ./server/conf.d:/etc/nginx/conf.d
-    - ./app/static:/app/static
-    - /root/ssl/official/gveyes_net.crt:/root/ssl/official/gveyes_net.crt
-    - /root/ssl/official/gveyes.net.private_key:/root/ssl/official/gveyes.net.private_key
+    - ./nginx/conf/:/etc/nginx/conf.d/:ro
+    - ./certbot/www/:/var/www/certbot/:ro
   links:
     - web:web
-  ports:
-    - "433:433"
-
+certbot:
+  image: certbot/certbot:latest
+  volumes:
+    - ./certbot/www/:/var/www/certbot/:rw
+    - ./certbot/conf/:/etc/letsencrypt/:rw
 web:
   extends:
     file: docker-compose.base.yml
